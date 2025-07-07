@@ -55,6 +55,12 @@ export default async function handler(req: Request, context: Context) {
         [Deno.env.get("CMS_USER")]: Deno.env.get("CMS_PASSWORD"),
     })
 
+    cms.upload({
+        name: "images",
+        description: "Here you can manage all images of your posts",
+        store: "gh:src/uploads/images",
+    })
+
     cms.storage(
         "gh",
         new GitHub({
