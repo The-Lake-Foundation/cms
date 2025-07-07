@@ -4,8 +4,6 @@ import { Octokit } from "https://esm.sh/@octokit/rest"
 export default async function handler(req: Request, context: Context) {
     const version = Deno.env.get("CMS_VERSION") || "latest"
 
-    console.log("Lume CMS version:", version)
-
     /* Deno polyfills for Edge Functions */
 
     const cacheStore = new Map<string, Response>()
@@ -33,12 +31,12 @@ export default async function handler(req: Request, context: Context) {
 
     const lumeCMS = (
         await import(
-            `https://cdn.jsdelivr.net/gh/lumeland/cms@${version}/mod.ts`
+            `https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/mod.ts`
         )
     ).default
     const GitHub = (
         await import(
-            `https://cdn.jsdelivr.net/gh/lumeland/cms@${version}/storage/github.ts`
+            `https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/storage/github.ts`
         )
     ).default
 
