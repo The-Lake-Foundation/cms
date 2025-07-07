@@ -1,5 +1,5 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
-import { Octokit } from "https://esm.sh/octokit"
+import { Octokit } from "https://esm.sh/@octokit/rest"
 
 export default async function handler(req: Request, context: Context) {
     /* Deno polyfills for Edge Functions */
