@@ -1,0 +1,11 @@
+[build]
+command = "deno upgrade && deno task generate-imports"
+
+[functions]
+  deno_import_map = "./import_map.json"
+
+[[redirects]]
+  from = "/*"
+  to = "/netlify/edge-functions/cms"
+  status = 200
+  force = true

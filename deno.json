@@ -1,0 +1,12 @@
+{
+    "tasks": {
+        "start": "deno task generate-imports && deno run -A npm:netlify dev ",
+        "generate-imports": "deno run -A generate_imports.ts"
+    },
+    "imports": {
+        "@std/assert": "jsr:@std/assert@1"
+    },
+    "compilerOptions": {
+        "strict": false
+    }
+}
