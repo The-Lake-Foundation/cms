@@ -56,9 +56,8 @@ export default async function handler(req: Request, context: Context) {
     })
 
     cms.upload({
-        name: "images",
-        description: "Here you can manage all images of your posts",
-        store: "gh:src/uploads/images",
+        name: "uploads",
+        store: "gh:src/content/uploads",
     })
 
     cms.storage(
@@ -72,7 +71,7 @@ export default async function handler(req: Request, context: Context) {
 
     cms.collection({
         name: "posts",
-        store: "gh:src/posts/*.json",
+        store: "gh:src/content/posts/*.json",
         fields: ["title: text!", "author: text!", "content: markdown"],
         documentLabel(name) {
             return name.replace(".json", "")
