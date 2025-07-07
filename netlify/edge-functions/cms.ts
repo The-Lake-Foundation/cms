@@ -4,6 +4,8 @@ import { Octokit } from "https://esm.sh/@octokit/rest"
 export default async function handler(req: Request, context: Context) {
     const version = Deno.env.get("CMS_VERSION") || "latest"
 
+    console.log("Lume CMS version:", version)
+
     /* Deno polyfills for Edge Functions */
 
     const cacheStore = new Map<string, Response>()
