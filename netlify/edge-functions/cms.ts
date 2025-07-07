@@ -64,8 +64,8 @@ export default async function handler(req: Request, context: Context) {
         "gh",
         new GitHub({
             client: client,
-            owner: "the-lake-foundation",
-            repo: "lume-cms",
+            owner: "The-Lake-Foundation",
+            repo: "onepercentapp",
             branch: "staging",
         })
     )
