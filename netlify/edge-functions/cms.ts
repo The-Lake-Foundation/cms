@@ -39,8 +39,8 @@ export default async function handler(req: Request, context: Context) {
     // Initialize these outside the handler to reuse across requests
     const cms = lumeCMS({
         site: {
-            name: "My Awesome Site",
-            url: "https://localhost:8000",
+            name: "The One Percent Club | CMS",
+            url: "https://staging.b.theonepercentclub.uk",
         },
     })
 
@@ -56,7 +56,7 @@ export default async function handler(req: Request, context: Context) {
         "gh",
         new GitHub({
             client,
-            owner: "moonfacedigital",
+            owner: "the-lake-foundation",
             repo: "lume-cms",
         })
     )
