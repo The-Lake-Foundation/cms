@@ -45,17 +45,17 @@ export default async function handler(req: Request, context: Context) {
     })
 
     const client = new Octokit({
-        auth: "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",
+        auth: Deno.env.get("GITHUB_TOKEN"),
     })
 
     cms.auth({
-        admin: "admin",
+        [Deno.env.get("CMS_USER")]: Deno.env.get("CMS_PASSWORD"),
     })
 
     cms.storage(
         "gh",
         new GitHub({
-            client,
+            client: client,
             owner: "the-lake-foundation",
             repo: "lume-cms",
         })
