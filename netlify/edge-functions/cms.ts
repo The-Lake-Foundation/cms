@@ -51,8 +51,11 @@ export default async function handler(req: Request, context: Context) {
         auth: Deno.env.get("GITHUB_TOKEN"),
     })
 
+    const currentUser = Deno.env.get("CMS_USER")
+    const cmsPassword = Deno.env.get("CMS_PASSWORD")
+
     cms.auth({
-        [Deno.env.get("CMS_USER")]: Deno.env.get("CMS_PASSWORD"),
+        [currentUser]: cmsPassword,
     })
 
     cms.upload({
@@ -67,6 +70,18 @@ export default async function handler(req: Request, context: Context) {
             owner: "The-Lake-Foundation",
             repo: "onepercentapp",
             branch: "staging",
+            commitMessage: ({ action, path }) => {
+                switch (action) {
+                    case "create":
+                        return `${currentUser} created ${path}`
+                    case "update":
+                        return `${currentUser}updated ${path}`
+                    case "delete":
+                        return `${currentUser}deleted ${path}`
+                    default:
+                        return `${currentUser} modified ${path}`
+                }
+            },
         })
     )
 
