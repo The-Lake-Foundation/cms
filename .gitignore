@@ -1,3 +1,4 @@
 # Local Netlify folder
 .netlify
 import_map.json
+.env
