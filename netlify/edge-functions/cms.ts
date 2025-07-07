@@ -2,31 +2,6 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 
 export default async function handler(req: Request, context: Context) {
-    /* Deno polyfills for Edge Functions */
-
-    const cacheStore = new Map<string, Response>()
-
-    globalThis.caches = {
-        open: async (cacheName: string) => ({
-            match: async (request: RequestInfo | URL) => {
-                const key = typeof request === "string" ? request : request.url
-                return cacheStore.get(key)
-            },
-            put: async (request: RequestInfo | URL, response: Response) => {
-                const key = typeof request === "string" ? request : request.url
-                cacheStore.set(key, response)
-            },
-            delete: async (request: RequestInfo | URL) => {
-                const key = typeof request === "string" ? request : request.url
-                return cacheStore.delete(key)
-            },
-            keys: async () =>
-                Array.from(cacheStore.keys()).map((url) => new Request(url)),
-        }),
-    } as unknown as CacheStorage
-
-    /* End of Deno polyfills for Edge Functions */
-
     const lumeCMS = (
         await import(
             "https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/mod.ts"
