@@ -66,6 +66,7 @@ export default async function handler(req: Request, context: Context) {
             client: client,
             owner: "the-lake-foundation",
             repo: "lume-cms",
+            branch: "staging",
         })
     )
 
