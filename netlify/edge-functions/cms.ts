@@ -73,13 +73,13 @@ export default async function handler(req: Request, context: Context) {
             commitMessage: ({ action, path }) => {
                 switch (action) {
                     case "create":
-                        return `${currentUser} created ${path}`
+                        return `[cms] ${currentUser} created ${path}`
                     case "update":
-                        return `${currentUser}updated ${path}`
+                        return `[cms] ${currentUser}updated ${path}`
                     case "delete":
-                        return `${currentUser}deleted ${path}`
+                        return `[cms] ${currentUser}deleted ${path}`
                     default:
-                        return `${currentUser} modified ${path}`
+                        return `[cms] ${currentUser} modified ${path}`
                 }
             },
         })
