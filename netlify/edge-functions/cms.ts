@@ -19,6 +19,7 @@ export default async function handler(req: Request, context: Context) {
             name: "The 1% Club CMS",
             url: "https://staging.b.theonepercentclub.uk",
         },
+        root: "",
     })
 
     const client = new Octokit({
