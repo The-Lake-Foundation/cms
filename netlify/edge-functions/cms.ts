@@ -2,8 +2,6 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 
 export default async function handler(req: Request, context: Context) {
-    const version = Deno.env.get("CMS_VERSION") || "latest"
-
     /* Deno polyfills for Edge Functions */
 
     const cacheStore = new Map<string, Response>()
@@ -31,12 +29,12 @@ export default async function handler(req: Request, context: Context) {
 
     const lumeCMS = (
         await import(
-            `https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/mod.ts`
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/mod.ts"
         )
     ).default
     const GitHub = (
         await import(
-            `https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/storage/github.ts`
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/storage/github.ts"
         )
     ).default
 
@@ -47,14 +45,6 @@ export default async function handler(req: Request, context: Context) {
             url: "https://staging.b.theonepercentclub.uk",
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
-        extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@${version}/static/styles.css" as="style" onload="this.rel='stylesheet'">
-
-                   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@${version}/static/styles.css" as="style">
-
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@${version}/static/styles.css"></noscript>
-                     `,
     })
 
     const client = new Octokit({
