@@ -45,6 +45,14 @@ export default async function handler(req: Request, context: Context) {
             url: "https://staging.b.theonepercentclub.uk",
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
+        extraHead: `
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css" as="style" onload="this.rel='stylesheet'">
+
+                   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css" as="style">
+
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css"></noscript>
+                     `,
     })
 
     const client = new Octokit({
