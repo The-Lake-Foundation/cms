@@ -4,26 +4,26 @@ import { Octokit } from "https://esm.sh/@octokit/rest"
 export default async function handler(req: Request, context: Context) {
     /* Deno polyfills for Edge Functions */
 
-    // const cacheStore = new Map<string, Response>()
+    const cacheStore = new Map<string, Response>()
 
-    // globalThis.caches = {
-    //     open: async (cacheName: string) => ({
-    //         match: async (request: RequestInfo | URL) => {
-    //             const key = typeof request === "string" ? request : request.url
-    //             return cacheStore.get(key)
-    //         },
-    //         put: async (request: RequestInfo | URL, response: Response) => {
-    //             const key = typeof request === "string" ? request : request.url
-    //             cacheStore.set(key, response)
-    //         },
-    //         delete: async (request: RequestInfo | URL) => {
-    //             const key = typeof request === "string" ? request : request.url
-    //             return cacheStore.delete(key)
-    //         },
-    //         keys: async () =>
-    //             Array.from(cacheStore.keys()).map((url) => new Request(url)),
-    //     }),
-    // } as unknown as CacheStorage
+    globalThis.caches = {
+        open: async (cacheName: string) => ({
+            match: async (request: RequestInfo | URL) => {
+                const key = typeof request === "string" ? request : request.url
+                return cacheStore.get(key)
+            },
+            put: async (request: RequestInfo | URL, response: Response) => {
+                const key = typeof request === "string" ? request : request.url
+                cacheStore.set(key, response)
+            },
+            delete: async (request: RequestInfo | URL) => {
+                const key = typeof request === "string" ? request : request.url
+                return cacheStore.delete(key)
+            },
+            keys: async () =>
+                Array.from(cacheStore.keys()).map((url) => new Request(url)),
+        }),
+    } as unknown as CacheStorage
 
     /* End of Deno polyfills for Edge Functions */
 
