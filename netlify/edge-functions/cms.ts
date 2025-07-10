@@ -17,6 +17,8 @@ export default async function handler(req: Request, context: Context) {
         )
     ).default
 
+    console.log("IS NETLIFY ENV", Deno.env.get("NETLIFY"))
+
     // Initialize these outside the handler to reuse across requests
     const cms = lumeCMS({
         site: {
