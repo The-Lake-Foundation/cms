@@ -2,6 +2,8 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 
 export default async function handler(req: Request, context: Context) {
+    console.log("IS NETLIFY ENV", Deno.env.get("NETLIFY"))
+
     /* Deno polyfills for Edge Functions */
 
     /* End of Deno polyfills for Edge Functions */
@@ -16,8 +18,6 @@ export default async function handler(req: Request, context: Context) {
             "https://cdn.jsdelivr.net/gh/lumeland/cms@fd464998b652c724c2b89ca7b1b7fca72cadd605/storage/github.ts"
         )
     ).default
-
-    console.log("IS NETLIFY ENV", Deno.env.get("NETLIFY"))
 
     // Initialize these outside the handler to reuse across requests
     const cms = lumeCMS({
