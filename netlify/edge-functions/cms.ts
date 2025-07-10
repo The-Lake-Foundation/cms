@@ -1,7 +1,7 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@8660f6622a67a34000b696cbee165e9772603da8/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@8660f6622a67a34000b696cbee165e9772603da8/storage/github.ts"
 
 export default async function handler(req: Request, context: Context) {
     // Initialize these outside the handler to reuse across requests
@@ -12,12 +12,12 @@ export default async function handler(req: Request, context: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@6771d43a29cb63431078615b4e31a69af8aee46e/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css"></noscript>
                      `,
     })
 
