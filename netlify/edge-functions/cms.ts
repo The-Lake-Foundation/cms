@@ -1,24 +1,9 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/storage/github.ts"
 
 export default async function handler(req: Request, context: Context) {
-    console.log("is Netlify", globalThis?.Netlify)
-
-    /* Deno polyfills for Edge Functions */
-
-    /* End of Deno polyfills for Edge Functions */
-
-    const lumeCMS = (
-        await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/mod.ts"
-        )
-    ).default
-    const GitHub = (
-        await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@6109673c706c3f21807370bb3d10eb125bd9e4ad/storage/github.ts"
-        )
-    ).default
-
     // Initialize these outside the handler to reuse across requests
     const cms = lumeCMS({
         site: {
