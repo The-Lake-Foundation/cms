@@ -8,12 +8,12 @@ export default async function handler(req: Request, context: Context) {
 
     const lumeCMS = (
         await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@d79b3738383502bc21feddc67d8fffd1e47d06e6/mod.ts"
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@fd464998b652c724c2b89ca7b1b7fca72cadd605/mod.ts"
         )
     ).default
     const GitHub = (
         await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@d79b3738383502bc21feddc67d8fffd1e47d06e6/storage/github.ts"
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@fd464998b652c724c2b89ca7b1b7fca72cadd605/storage/github.ts"
         )
     ).default
 
