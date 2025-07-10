@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "start": "deno task generate-imports && deno run -A npm:netlify dev ",
+        "start": "deno task generate-imports && deno run --watch --allow-net --allow-read --allow-env --env-file serve.ts",
         "generate-imports": "deno run -A generate_imports.ts"
     },
     "imports": {
