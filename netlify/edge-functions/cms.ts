@@ -2,7 +2,7 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 
 export default async function handler(req: Request, context: Context) {
-    console.log("IS NETLIFY ENV", Deno.env.get("NETLIFY"))
+    console.log("deno deployment ID", Deno.env.get("DENO_DEPLOYMENT_ID"))
 
     /* Deno polyfills for Edge Functions */
 
@@ -10,12 +10,12 @@ export default async function handler(req: Request, context: Context) {
 
     const lumeCMS = (
         await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@fd464998b652c724c2b89ca7b1b7fca72cadd605/mod.ts"
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@68774955e11ab3cc8282eddfea391b45a4f9c9b1/mod.ts"
         )
     ).default
     const GitHub = (
         await import(
-            "https://cdn.jsdelivr.net/gh/lumeland/cms@fd464998b652c724c2b89ca7b1b7fca72cadd605/storage/github.ts"
+            "https://cdn.jsdelivr.net/gh/lumeland/cms@68774955e11ab3cc8282eddfea391b45a4f9c9b1/storage/github.ts"
         )
     ).default
 
