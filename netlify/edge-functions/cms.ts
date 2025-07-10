@@ -9,6 +9,9 @@ export default async function handler(req: Request, context: Context) {
         site: {
             name: "The 1% Club CMS",
             url: "https://staging.b.theonepercentclub.uk",
+            body: `
+    <p>Long text, for instructions or other content that you want to make it visible in the homepage</p>
+    `,
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
@@ -62,7 +65,16 @@ export default async function handler(req: Request, context: Context) {
     cms.collection({
         name: "posts",
         store: "gh:src/content/posts/*.json",
-        fields: ["title: text!", "author: text!", "content: markdown"],
+        fields: [
+            "title: text!",
+            "author: text!",
+            "content: markdown",
+            {
+                name: "image",
+                type: "file",
+                upload: "uploads",
+            },
+        ],
         documentLabel(name) {
             return name.replace(".json", "")
         },
