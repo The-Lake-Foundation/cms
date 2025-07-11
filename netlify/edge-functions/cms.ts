@@ -1,7 +1,7 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@tmp/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@tmp/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
@@ -14,12 +14,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@tmp/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@tmp/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@tmp/static/styles.css"></noscript>
                      `,
     })
 
@@ -58,6 +58,17 @@ export default async function handler(req: Request, ctx?: Context) {
     )
 
     _config.cnfg(cms)
+
+    // cms.field("library", {
+    //     tag: "library-field",
+    //     jsImport:
+    //         "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms-widgets/library/index.js",
+    //     applyChanges(data, changes, field) {
+    //         const { name } = field
+    //         const value = changes[name]
+    //         data[name] = value
+    //     },
+    // })
 
     // Initialize app only once
     let app: ReturnType<typeof cms.init> | null = null
