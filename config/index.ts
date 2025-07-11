@@ -11,8 +11,8 @@ export default {
             store: "gh:src/content/uploads",
         })
         cms.collection({
-            name: "posts",
-            store: "gh:src/content/posts/*.json",
+            name: "pages",
+            store: "gh:src/content/pages/**/*/index.json",
             fields: [
                 {
                     name: "status",
@@ -23,7 +23,14 @@ export default {
                 {
                     name: "page-data",
                     type: "object",
+                    open: true,
                     fields: [
+                        {
+                            name: "slug",
+                            type: "text",
+                            description:
+                                "The URL slug for this page, e.g. 'about-us'.",
+                        },
                         "title: text!",
                         "description: text!",
                         {
@@ -128,11 +135,9 @@ export default {
                     ],
                 },
             ],
-            documentLabel(name) {
-                return name.replace(".json", "")
-            },
+
             documentName(data) {
-                return `${data.title}-${data.author}.md`
+                return `${data.slug}/index.json`
             },
         })
     },
