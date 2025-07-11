@@ -1,27 +1,25 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@701b79a5262fa1169fc79083c0c24492d55c05fd/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@701b79a5262fa1169fc79083c0c24492d55c05fd/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
     // Initialize these outside the handler to reuse across requests
     const cms = lumeCMS({
         site: {
-            name: "The 1% Club CMS",
-            url: "https://staging.b.theonepercentclub.uk",
-            body: `
-    <p>Long text, for instructions or other content that you want to make it visible in the homepage</p>
-    `,
+            name: _config.name,
+            url: _config.url,
+            body: _config.body,
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@701b79a5262fa1169fc79083c0c24492d55c05fd/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@701b79a5262fa1169fc79083c0c24492d55c05fd/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@701b79a5262fa1169fc79083c0c24492d55c05fd/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@8660f6622a67a34000b696cbee165e9772603da8/static/styles.css"></noscript>
                      `,
     })
 
@@ -39,6 +37,7 @@ export default async function handler(req: Request, ctx?: Context) {
     cms.storage(
         "gh",
         new GitHub({
+            // @ts-ignore Octokit type definitions are not compatible with the one used by lumeCMS
             client: client,
             owner: "The-Lake-Foundation",
             repo: "onepercentapp",

@@ -21,8 +21,7 @@ export default {
                     value: "Draft",
                 },
                 {
-                    name: "meta",
-                    label: "Metadata",
+                    name: "page-data",
                     type: "object",
                     fields: [
                         "title: text!",
@@ -34,41 +33,95 @@ export default {
                         },
                     ],
                 },
-                "content: markdown",
                 {
-                    name: "image",
-                    type: "file",
-                    upload: "uploads",
-                },
-                {
-                    name: "blocks",
-                    type: "choose-list",
+                    name: "sections",
+                    type: "object-list",
                     fields: [
                         {
-                            name: "title",
-                            type: "object",
-                            fields: ["text: text"],
+                            name: "name",
+                            type: "text",
+                            description:
+                                "Semantic name to help you identify the section",
+                            label: "Section Name",
                         },
                         {
-                            name: "content",
+                            name: "appearance",
                             type: "object",
                             fields: [
-                                "body: markdown",
                                 {
-                                    name: "blocks",
-                                    type: "choose-list",
+                                    name: "width",
+                                    type: "select",
+                                    options: [
+                                        "full",
+                                        "content",
+                                        "feature",
+                                        "narrow",
+                                    ],
+                                    value: "content",
+                                },
+                                {
+                                    name: "alignment",
+                                    type: "select",
+                                    options: ["start", "center", "end"],
+                                    value: "center",
+                                },
+                                {
+                                    name: "child-alignment",
+                                    type: "object",
                                     fields: [
                                         {
-                                            name: "title",
-                                            type: "object",
-                                            fields: ["text: text"],
+                                            name: "x-alignment",
+                                            type: "select",
+                                            options: [
+                                                "start",
+                                                "end",
+                                                "between",
+                                                "around",
+                                                "center",
+                                            ],
+                                            value: "start",
                                         },
                                         {
-                                            name: "content",
-                                            type: "object",
-                                            fields: ["body: markdown"],
+                                            name: "y-alignment",
+                                            type: "select",
+                                            options: [
+                                                "start",
+                                                "end",
+                                                "between",
+                                                "around",
+                                                "center",
+                                            ],
+                                            value: "start",
                                         },
                                     ],
+                                },
+                                {
+                                    name: "advanced",
+                                    type: "object",
+                                    fields: [
+                                        {
+                                            name: "css",
+                                            label: "Custom CSS",
+                                            type: "code",
+                                            language: "css",
+                                        },
+                                    ],
+                                },
+                            ],
+                        },
+                        {
+                            name: "blocks",
+                            type: "choose-list",
+                            fields: [
+                                {
+                                    name: "title",
+                                    type: "object",
+                                    fields: ["text: text"],
+                                },
+                                {
+                                    name: "content",
+                                    type: "object",
+                                    fields: ["body: markdown"],
                                 },
                             ],
                         },
