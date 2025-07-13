@@ -13,6 +13,10 @@ export default {
         cms.collection({
             name: "pages",
             store: "gh:src/content/pages/**/*/index.json",
+            documentName: (data) => {
+                return `${data["page-data"].slug}.json`
+            },
+            rename: false,
             fields: [
                 {
                     name: "status",
@@ -23,11 +27,16 @@ export default {
                 {
                     name: "page-data",
                     type: "object",
-                    open: true,
+                    attributes: {
+                        open: true,
+                    },
                     fields: [
                         {
                             name: "slug",
                             type: "text",
+                            attributes: {
+                                required: true,
+                            },
                             description:
                                 "The URL slug for this page, e.g. 'about-us'.",
                         },
@@ -135,10 +144,6 @@ export default {
                     ],
                 },
             ],
-
-            documentName(data) {
-                return `${data.slug}/index.json`
-            },
         })
     },
 }
