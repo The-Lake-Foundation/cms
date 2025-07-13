@@ -16,6 +16,9 @@ export default {
             documentName: (data) => {
                 return `${data["page-data"].slug}.json`
             },
+            documentLabel: (name) => {
+                return name.replace("index.json", "Page")
+            },
             rename: false,
             fields: [
                 {
