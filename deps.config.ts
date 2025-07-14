@@ -2,6 +2,7 @@
 export default {
     jsr: [
         "@std/html@1.0.4",
+        "@std/html@1.0.3",
         "@std/yaml@1.0.8",
         "@std/front-matter@1.0.9",
         "@std/fs@1.0.19",
