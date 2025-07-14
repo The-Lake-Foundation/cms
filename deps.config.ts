@@ -6,6 +6,7 @@ export default {
         "@std/front-matter@1.0.9",
         "@std/fs@1.0.19",
         "@std/path@1.1.1",
+        "@std/path@1.0.8", //  Have zero idea why this is needed, but it is
         "@std/fmt@1.0.8",
         "@std/encoding@1.0.10",
         "@std/media-types@1.1.0",
