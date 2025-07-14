@@ -2,3 +2,4 @@
 .netlify
 import_map.json
 *.env
+deno.lock
