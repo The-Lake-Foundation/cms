@@ -5,21 +5,22 @@ export default {
     <p>Long text, for instructions or other content that you want to make it visible in the homepage</p>
     `,
 
-    cnfg: (cms) => {
+    cnfg: (cms, props) => {
         cms.upload({
             name: "uploads",
             store: "gh:src/content/uploads",
         })
         cms.collection({
             name: "pages",
-            store: "gh:src/content/pages/**/*/index.json",
+            store: "gh:src/content/pages/**/index.json",
             documentName: (data) => {
-                return `${data["page-data"].slug}.json`
+                return `${data["page-data"].slug}/index.json`
             },
             documentLabel: (name) => {
                 return name.replace("index.json", "Page")
             },
             rename: false,
+            labelSingular: "page",
             fields: [
                 {
                     name: "status",
@@ -37,6 +38,7 @@ export default {
                         {
                             name: "slug",
                             type: "text",
+
                             attributes: {
                                 required: true,
                             },
