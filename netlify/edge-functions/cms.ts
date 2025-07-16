@@ -46,8 +46,8 @@ export default async function handler(req: Request, ctx?: Context) {
             // @ts-ignore Octokit type definitions are not compatible with the one used by lumeCMS
             client: client,
             owner: "The-Lake-Foundation",
-            repo: "onepercentapp",
-            branch: "staging",
+            repo: "cms",
+            branch: "main",
             commitMessage: ({ action, path }) => {
                 switch (action) {
                     case "create":
