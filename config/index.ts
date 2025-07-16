@@ -19,7 +19,7 @@ export default {
             documentLabel: (name) => {
                 return name.replace("index.json", "Page")
             },
-            rename: false,
+            rename: "auto",
             labelSingular: "page",
             fields: [
                 {
@@ -38,7 +38,6 @@ export default {
                         {
                             name: "slug",
                             type: "text",
-
                             attributes: {
                                 required: true,
                             },

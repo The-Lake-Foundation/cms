@@ -2,8 +2,8 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 // import lumeCMS from "../../../../../../lume-cms/mod.ts"
 // import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@_tmp/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@_tmp/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
@@ -20,12 +20,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@_tmp/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@_tmp/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kylesloper/lume-cms@_tmp/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css"></noscript>
                      `,
     })
 
