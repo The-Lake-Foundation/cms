@@ -42,7 +42,7 @@ export default {
                                 required: true,
                             },
                             description:
-                                "The URL slug for this page, e.g. 'about-us'.",
+                                "The URL slug for this page, e.g. 'about-us', 'legal/privacy-policy'",
                         },
                         "title: text!",
                         "description: text!",
