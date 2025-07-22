@@ -2,8 +2,8 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 // import lumeCMS from "../../../../../../lume-cms/mod.ts"
 // import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
@@ -20,12 +20,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@185f5900df6b8513a16816072bf02eda77691808/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/static/styles.css"></noscript>
                      `,
     })
 
@@ -46,16 +46,16 @@ export default async function handler(req: Request, ctx?: Context) {
             // @ts-ignore Octokit type definitions are not compatible with the one used by lumeCMS
             client: client,
             owner: "The-Lake-Foundation",
-            repo: "cms",
-            branch: "main",
+            repo: "onepercentapp",
+            branch: "staging",
             commitMessage: ({ action, path }) => {
                 switch (action) {
                     case "create":
                         return `[cms] [skipci] ${currentUser} created ${path}`
                     case "update":
-                        return `[cms] [skipci] ${currentUser}updated ${path}`
+                        return `[cms] [skipci] ${currentUser} updated ${path}`
                     case "delete":
-                        return `[cms] [skipci] ${currentUser}deleted ${path}`
+                        return `[cms] [skipci] ${currentUser} deleted ${path}`
                     default:
                         return `[cms] [skipci] ${currentUser} modified ${path}`
                 }
