@@ -32,7 +32,11 @@ export default async function handler(req: Request, ctx?: Context) {
                    <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/static/styles.css" as="style">
 
                    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/static/styles.css"></noscript>
-                     `,
+                    <meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+		/>
+                   `,
     })
 
     const client = new Octokit({
