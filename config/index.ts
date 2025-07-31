@@ -40,7 +40,20 @@ export default {
                 {
                     name: "status",
                     type: "select",
-                    options: ["Draft", "Approved", "Published"],
+                    options: [
+                        {
+                            label: "Draft",
+                            value: "draft",
+                        },
+                        {
+                            label: "Review",
+                            value: "review",
+                        },
+                        {
+                            label: "Published",
+                            value: "published",
+                        },
+                    ],
                     value: "Draft",
                 },
                 {
