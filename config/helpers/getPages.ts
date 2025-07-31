@@ -46,7 +46,6 @@ export async function getPages(cms, col, column = "slug") {
     const contents = cms.initContent()
     const collection = contents.collections[col]
     const documents = await Array.fromAsync(collection)
-    console.log("Documents:", documents)
 
     return getPossibleDirectories(documents)
 }
