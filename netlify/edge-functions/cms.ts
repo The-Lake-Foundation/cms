@@ -10,7 +10,7 @@ export default async function handler(req: Request, ctx?: Context) {
     const USE_PROD_URLS = true
     const FIELDS_URL =
         globalThis?.Netlify || USE_PROD_URLS === true
-            ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/"
+            ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields@f9e024f095b5387d357e91de06f67e651607affa/"
             : "http://localhost:4545/"
 
     const url = new URL(req.url)
