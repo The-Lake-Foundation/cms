@@ -1,9 +1,9 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-import lumeCMS from "../../../../../../lume-cms/mod.ts"
-import GitHub from "../../../../../../lume-cms/storage/github.ts"
-// import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/mod.ts"
-// import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/storage/github.ts"
+// import lumeCMS from "../../../../../../lume-cms/mod.ts"
+// import GitHub from "../../../../../../lume-cms/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
