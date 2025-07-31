@@ -1,12 +1,18 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-// import lumeCMS from "../../../../../../lume-cms/mod.ts"
-// import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/storage/github.ts"
+import lumeCMS from "../../../../../../lume-cms/mod.ts"
+import GitHub from "../../../../../../lume-cms/storage/github.ts"
+// import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/mod.ts"
+// import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/storage/github.ts"
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
+    const USE_PROD_URLS = true
+    const FIELDS_URL =
+        globalThis?.Netlify || USE_PROD_URLS === true
+            ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/"
+            : "http://localhost:4545/"
+
     const url = new URL(req.url)
     const props = {
         folder: url.searchParams.get("folder") ?? "",
@@ -51,30 +57,29 @@ export default async function handler(req: Request, ctx?: Context) {
             commitMessage: ({ action, path }) => {
                 switch (action) {
                     case "create":
-                        return `[cms] [skipci] ${currentUser} created ${path}`
+                        return `[cms] ${currentUser} created ${path}`
                     case "update":
-                        return `[cms] [skipci] ${currentUser} updated ${path}`
+                        return `[cms] ${currentUser} updated ${path}`
                     case "delete":
-                        return `[cms] [skipci] ${currentUser} deleted ${path}`
+                        return `[cms] ${currentUser} deleted ${path}`
                     default:
-                        return `[cms] [skipci] ${currentUser} modified ${path}`
+                        return `[cms] ${currentUser} modified ${path}`
                 }
             },
         })
     )
 
-    _config.cnfg(cms, props)
+    cms.field("combobox", {
+        tag: "f-combobox",
+        jsImport: FIELDS_URL + "combobox/index.js",
+        applyChanges(data, changes, field) {
+            const { name } = field
+            const value = changes[name]
+            data[name] = value || undefined
+        },
+    })
 
-    // cms.field("library", {
-    //     tag: "library-field",
-    //     jsImport:
-    //         "https://cdn.jsdelivr.net/gh/kylesloper/lume-cms-widgets/library/index.js",
-    //     applyChanges(data, changes, field) {
-    //         const { name } = field
-    //         const value = changes[name]
-    //         data[name] = value
-    //     },
-    // })
+    await _config.cnfg(cms, props)
 
     // Initialize app only once
     let app: ReturnType<typeof cms.init> | null = null

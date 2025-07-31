@@ -1,3 +1,5 @@
+import { getPages } from "./helpers/getPages.ts"
+
 export default {
     name: "The 1% Club CMS",
     url: "https://staging.b.theonepercentclub.uk",
@@ -5,7 +7,7 @@ export default {
     <p>Long text, for instructions or other content that you want to make it visible in the homepage</p>
     `,
 
-    cnfg: (cms, props) => {
+    cnfg: async (cms, props) => {
         cms.upload({
             name: "uploads",
             store: "gh:src/content/uploads",
@@ -14,7 +16,19 @@ export default {
             name: "pages",
             store: "gh:src/content/pages/**/index.json",
             documentName: (data) => {
-                return `${data["page-data"].slug}/index.json`
+                let slug = data["page-data"].slug
+
+                // Use a regular expression to remove one or more leading slashes.
+                // The '^' anchors the pattern to the beginning of the string, and '\/+'
+                // matches one or more forward slashes.
+                slug = slug.replace(/^\/+/, "")
+
+                // Use a regular expression to remove one or more trailing slashes.
+                // The '$' anchors the pattern to the end of the string, and '\/+'
+                // matches one or more forward slashes.
+                slug = slug.replace(/\/+$/, "")
+
+                return `${slug}/index.json`
             },
             documentLabel: (name) => {
                 return name.replace("index.json", "Page")
@@ -37,12 +51,16 @@ export default {
                     fields: [
                         {
                             name: "slug",
-                            type: "text",
+                            type: "combobox",
+                            description:
+                                "The URL slug for this page, e.g. 'about-us', 'legal/privacy-policy'",
                             attributes: {
                                 required: true,
                             },
-                            description:
-                                "The URL slug for this page, e.g. 'about-us', 'legal/privacy-policy'",
+                            value: props?.folder,
+                            async init(field, { data }, doc) {
+                                field.options = await getPages(cms, "pages")
+                            },
                         },
                         "title: text!",
                         "description: text!",
@@ -123,7 +141,12 @@ export default {
                                             name: "css",
                                             label: "Custom CSS",
                                             type: "code",
-                                            language: "css",
+                                            value: "{}",
+                                            attributes: {
+                                                data: {
+                                                    language: "CSS",
+                                                },
+                                            },
                                         },
                                     ],
                                 },
