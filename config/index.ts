@@ -34,6 +34,7 @@ export default {
                 return name.replace("index.json", "Page")
             },
             rename: "auto",
+            autoAddPrefix: false,
             labelSingular: "page",
             fields: [
                 {
