@@ -361,6 +361,7 @@
     "https://esm.sh/@octokit/rest": "https://esm.sh/@octokit/rest@22.0.0",
     "https://esm.sh/before-after-hook@^4.0.0?target=denonext": "https://esm.sh/before-after-hook@4.0.0?target=denonext",
     "https://esm.sh/fast-content-type-parse@^3.0.0?target=denonext": "https://esm.sh/fast-content-type-parse@3.0.0?target=denonext",
+    "https://esm.sh/gh/jcardama/deno_slugify/mod.ts": "https://esm.sh/gh/jcardama/deno_slugify@6d9b664/mod.ts",
     "https://esm.sh/universal-user-agent@^7.0.0?target=denonext": "https://esm.sh/universal-user-agent@7.0.3?target=denonext",
     "https://esm.sh/universal-user-agent@^7.0.2?target=denonext": "https://esm.sh/universal-user-agent@7.0.3?target=denonext"
   },
@@ -533,6 +534,8 @@
     "https://esm.sh/before-after-hook@4.0.0?target=denonext": "a736542fbca8aa4f8eaa30249a6f579758fbda59aef2fbed9f10ac7974982421",
     "https://esm.sh/fast-content-type-parse@3.0.0/denonext/fast-content-type-parse.mjs": "e2988912b33fdaacf282c193bfb39ff0739cdaa3e9dbcf15e9fda4d5221033d0",
     "https://esm.sh/fast-content-type-parse@3.0.0?target=denonext": "d3c0ad21dadee727b7226fbac0685c3b9373705b8f8ac05d1d0f13e07506c8a8",
+    "https://esm.sh/gh/jcardama/deno_slugify@6d9b664/denonext/mod.ts.mjs": "d41c1523edaccddbd109d98087f1eb0c684995d49dac7ef87505ecc11d00e3a5",
+    "https://esm.sh/gh/jcardama/deno_slugify@6d9b664/mod.ts": "2cc52d7b0ffa172b2bf34dc3ace935ab4cb67c18b6c8d3ca653e4a13039c8447",
     "https://esm.sh/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/core/templates/tree.ts": "20a57737bafc1ffbc4bf3199d8cbef9e4907db99470f550ae67029d77b4d90c8",
     "https://esm.sh/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/denonext/core/templates/tree.ts.mjs": "b51d1ebe81fa24175603f93ef7ebb083c0b39e24166653b69a978c892e076014",
     "https://esm.sh/universal-user-agent@7.0.3/denonext/universal-user-agent.mjs": "021090b5f3bb060b1b0364cb79daa2cc3760db58a023cd8892a098e6256a84c4",
