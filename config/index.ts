@@ -1,4 +1,3 @@
-import { slugify } from "https://esm.sh/gh/jcardama/deno_slugify/mod.ts"
 import { getPages } from "./helpers/getPages.ts"
 
 export default {
@@ -28,8 +27,6 @@ export default {
                 // The '$' anchors the pattern to the end of the string, and '\/+'
                 // matches one or more forward slashes.
                 slug = slug.replace(/\/+$/, "")
-
-                slug = slugify(slug)
 
                 return `${slug}/index.json`
             },
