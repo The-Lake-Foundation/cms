@@ -54,7 +54,7 @@ export default {
                             value: "published",
                         },
                     ],
-                    value: "Draft",
+                    value: "draft",
                 },
                 {
                     name: "page-data",
