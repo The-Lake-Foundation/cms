@@ -10,7 +10,11 @@ export default {
     cnfg: async (cms, props) => {
         cms.upload({
             name: "uploads",
-            store: "gh:src/content/uploads",
+            store: "gh:src/content/uploads/**/*",
+        })
+        cms.upload({
+            name: "system uploads",
+            store: "gh:src/content/systemUploads/**/*",
         })
         cms.collection({
             name: "pages",
@@ -168,23 +172,116 @@ export default {
                         },
                         {
                             name: "blocks",
-                            type: "choose-list",
+                            label: "Blocks",
+                            type: "library", // Custom type for this field
                             fields: [
                                 {
-                                    name: "title",
-                                    type: "object",
-                                    fields: ["text: text"],
+                                    name: "hero_section", // Value for the 'type' property in saved data
+                                    label: "Hero Section", // Label displayed in the modal
+                                    type: "object", // <-- CRUCIAL: This type ensures it saves as an object
+                                    // Custom property for modal UI presentation
+                                    category: ["Content"],
+                                    description:
+                                        "A large, engaging section for key messages.",
+                                    diagram: "/img/hero-diagram.png", // Example image path
+
+                                    fields: [
+                                        {
+                                            name: "text",
+                                            label: "Headline",
+                                            type: "text",
+                                        },
+                                        {
+                                            name: "subheading",
+                                            label: "Subheading",
+                                            type: "textarea",
+                                            required: false,
+                                        },
+                                        {
+                                            name: "image",
+                                            label: "Background Image",
+                                            type: "file",
+                                            required: false,
+                                        },
+                                        {
+                                            name: "cta_text",
+                                            label: "Call to Action Text",
+                                            type: "text",
+                                            required: false,
+                                        },
+                                        {
+                                            name: "cta_link",
+                                            label: "Call to Action Link",
+                                            type: "url",
+                                            required: false,
+                                        },
+                                    ],
                                 },
                                 {
-                                    name: "content",
+                                    name: "text_block",
+                                    label: "Text Block",
                                     type: "object",
-                                    fields: ["body: markdown"],
+                                    category: ["Primitive"],
+                                    description:
+                                        "A simple paragraph of rich text content.",
+
+                                    fields: [
+                                        {
+                                            name: "body",
+                                            label: "Content",
+                                            type: "text",
+                                        },
+                                    ],
                                 },
+                                {
+                                    name: "text_blocks",
+                                    label: "Text Blocks",
+                                    type: "object",
+                                    category: ["Primitive"],
+                                    description:
+                                        "A simple paragraph of rich text content.",
+                                    diagram: "https://picsum.photos/200/300", // Example image path
+
+                                    fields: [
+                                        {
+                                            name: "body",
+                                            label: "Content",
+                                            type: "text",
+                                        },
+                                    ],
+                                },
+                                // Add more component definitions here, each with name, label, type: "object", fields, and optional modalDisplay
                             ],
                         },
                     ],
                 },
             ],
+        })
+        cms.collection({
+            name: "forms",
+            store: "gh:src/content/forms/**/index.json",
+            documentName: (data) => {
+                let slug = data["page-data"].slug
+
+                // Use a regular expression to remove one or more leading slashes.
+                // The '^' anchors the pattern to the beginning of the string, and '\/+'
+                // matches one or more forward slashes.
+                slug = slug.replace(/^\/+/, "")
+
+                // Use a regular expression to remove one or more trailing slashes.
+                // The '$' anchors the pattern to the end of the string, and '\/+'
+                // matches one or more forward slashes.
+                slug = slug.replace(/\/+$/, "")
+
+                return `${slug}/index.json`
+            },
+            documentLabel: (name) => {
+                return name.replace("index.json", "Page")
+            },
+            rename: "auto",
+            autoAddPrefix: false,
+            labelSingular: "page",
+            fields: [],
         })
     },
 }

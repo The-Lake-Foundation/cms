@@ -5,6 +5,13 @@ import { Octokit } from "https://esm.sh/@octokit/rest"
 import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/mod.ts"
 import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/storage/github.ts"
 import _config from "../../config/index.ts"
+import { transform } from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/fields/utils.ts"
+import type {
+    Data,
+    FieldDefinition,
+    GroupField,
+    ResolvedGroupField,
+} from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/types.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
     const USE_PROD_URLS = true
@@ -36,6 +43,7 @@ export default async function handler(req: Request, ctx?: Context) {
 			name="viewport"
 			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 		/>
+       
                    `,
     })
 
@@ -80,6 +88,42 @@ export default async function handler(req: Request, ctx?: Context) {
             const { name } = field
             const value = changes[name]
             data[name] = value || undefined
+        },
+    })
+
+    cms.field("library", {
+        tag: "f-library",
+        jsImport: FIELDS_URL + "library/index.js",
+        async applyChanges(data, changes, field, document, cmsContent) {
+            const value = await Promise.all(
+                Object.values(changes[field.name] || {}).map(
+                    async (subchanges) => {
+                        const type = subchanges.type as string
+                        const value = { type } as Data
+                        const chooseField = field.fields?.find(
+                            (f) => f.name === type
+                        ) as ResolvedGroupField | undefined
+
+                        if (!chooseField) {
+                            throw new Error(`No field found for type '${type}'`)
+                        }
+
+                        for (const f of chooseField?.fields || []) {
+                            await f.applyChanges(
+                                value,
+                                subchanges,
+                                f,
+                                document,
+                                cmsContent
+                            )
+                        }
+
+                        return value
+                    }
+                )
+            )
+
+            data[field.name] = transform(field, value)
         },
     })
 
