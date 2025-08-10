@@ -1,4 +1,5 @@
 import { getPages } from "./helpers/getPages.ts"
+import { getBlocks } from "./helpers/getBlocks.ts"
 
 export default {
     name: "The 1% Club CMS",
@@ -20,7 +21,7 @@ export default {
             name: "pages",
             store: "gh:src/content/pages/**/index.json",
             documentName: (data) => {
-                let slug = data["page-data"].slug
+                let slug = data.pageData.slug
 
                 // Use a regular expression to remove one or more leading slashes.
                 // The '^' anchors the pattern to the beginning of the string, and '\/+'
@@ -44,6 +45,8 @@ export default {
                 {
                     name: "status",
                     type: "select",
+                    value: "draft",
+                    duplicationValue: "draft",
                     options: [
                         {
                             label: "Draft",
@@ -58,10 +61,9 @@ export default {
                             value: "published",
                         },
                     ],
-                    value: "draft",
                 },
                 {
-                    name: "page-data",
+                    name: "pageData",
                     type: "object",
                     attributes: {
                         open: true,
@@ -122,11 +124,12 @@ export default {
                                     value: "center",
                                 },
                                 {
-                                    name: "child-alignment",
+                                    name: "childAlignment",
                                     type: "object",
                                     fields: [
                                         {
-                                            name: "x-alignment",
+                                            name: "xAlignment",
+                                            label: "X Alignment",
                                             type: "select",
                                             options: [
                                                 "start",
@@ -138,7 +141,8 @@ export default {
                                             value: "start",
                                         },
                                         {
-                                            name: "y-alignment",
+                                            name: "yAlignment",
+                                            label: "Y Alignment",
                                             type: "select",
                                             options: [
                                                 "start",
@@ -175,16 +179,16 @@ export default {
                             label: "Blocks",
                             type: "library", // Custom type for this field
                             fields: [
+                                ...(await getBlocks()),
                                 {
-                                    name: "hero_section", // Value for the 'type' property in saved data
-                                    label: "Hero Section", // Label displayed in the modal
+                                    name: "hero", // Value for the 'type' property in saved data
+                                    label: "Hero", // Label displayed in the modal
                                     type: "object", // <-- CRUCIAL: This type ensures it saves as an object
                                     // Custom property for modal UI presentation
                                     category: ["Content"],
                                     description:
                                         "A large, engaging section for key messages.",
-                                    diagram: "/img/hero-diagram.png", // Example image path
-
+                                    // diagram: "/img/hero-diagram.png",
                                     fields: [
                                         {
                                             name: "text",
@@ -218,39 +222,82 @@ export default {
                                     ],
                                 },
                                 {
-                                    name: "text_block",
+                                    name: "textBlock",
                                     label: "Text Block",
                                     type: "object",
                                     category: ["Primitive"],
                                     description:
                                         "A simple paragraph of rich text content.",
-
                                     fields: [
                                         {
-                                            name: "body",
-                                            label: "Content",
+                                            name: "appearance",
+                                            type: "object",
+                                            fields: [
+                                                {
+                                                    name: "width",
+                                                    type: "select",
+                                                    options: [
+                                                        "auto",
+                                                        "100%",
+                                                        "75%",
+                                                        "50%",
+                                                        "25%",
+                                                    ],
+                                                    value: "auto",
+                                                },
+                                                {
+                                                    name: "selfAlignment",
+                                                    label: "Self Alignment",
+                                                    type: "object",
+                                                    fields: [
+                                                        {
+                                                            name: "xAlignment",
+                                                            label: "X Alignment",
+                                                            type: "select",
+                                                            options: [
+                                                                "start",
+                                                                "end",
+                                                                "center",
+                                                            ],
+                                                        },
+                                                        {
+                                                            name: "yAlignment",
+                                                            label: "Y Alignment",
+                                                            type: "select",
+                                                            options: [
+                                                                "start",
+                                                                "end",
+                                                                "center",
+                                                            ],
+                                                        },
+                                                    ],
+                                                },
+                                                {
+                                                    name: "advanced",
+                                                    type: "object",
+                                                    fields: [
+                                                        {
+                                                            name: "css",
+                                                            label: "Custom CSS",
+                                                            type: "code",
+                                                            value: "{}",
+                                                            attributes: {
+                                                                data: {
+                                                                    language:
+                                                                        "CSS",
+                                                                },
+                                                            },
+                                                        },
+                                                    ],
+                                                },
+                                            ],
+                                        },
+                                        {
+                                            name: "text",
                                             type: "text",
                                         },
                                     ],
                                 },
-                                {
-                                    name: "text_blocks",
-                                    label: "Text Blocks",
-                                    type: "object",
-                                    category: ["Primitive"],
-                                    description:
-                                        "A simple paragraph of rich text content.",
-                                    diagram: "https://picsum.photos/200/300", // Example image path
-
-                                    fields: [
-                                        {
-                                            name: "body",
-                                            label: "Content",
-                                            type: "text",
-                                        },
-                                    ],
-                                },
-                                // Add more component definitions here, each with name, label, type: "object", fields, and optional modalDisplay
                             ],
                         },
                     ],
@@ -261,7 +308,7 @@ export default {
             name: "forms",
             store: "gh:src/content/forms/**/index.json",
             documentName: (data) => {
-                let slug = data["page-data"].slug
+                let slug = data.pageData.slug
 
                 // Use a regular expression to remove one or more leading slashes.
                 // The '^' anchors the pattern to the beginning of the string, and '\/+'

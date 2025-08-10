@@ -1,9 +1,10 @@
 {
     "tasks": {
-        "start": "deno task generate-imports && deno run --watch --allow-net --allow-read --allow-env --env-file serve.ts",
+        "start": "deno task generate-imports && deno run --watch --allow-net --allow-read --allow-env --env-file --allow-import serve.ts",
         "generate-imports": "deno run -A generate_imports.ts"
     },
     "imports": {
+        "@netlify/blobs": "npm:@netlify/blobs@^10.0.8",
         "@std/assert": "jsr:@std/assert@1"
     },
     "compilerOptions": {

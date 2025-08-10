@@ -1,9 +1,9 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-// import lumeCMS from "../../../../../../lume-cms/mod.ts"
-// import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/storage/github.ts"
+import lumeCMS from "../../../../../../lume-cms/mod.ts"
+import GitHub from "../../../../../../lume-cms/storage/github.ts"
+// import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/mod.ts"
+// import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/storage/github.ts"
 import _config from "../../config/index.ts"
 import { transform } from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/fields/utils.ts"
 import type {
@@ -14,7 +14,7 @@ import type {
 } from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/types.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
-    const USE_PROD_URLS = true
+    const USE_PROD_URLS = false
     const FIELDS_URL =
         globalThis?.Netlify || USE_PROD_URLS === true
             ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/"
