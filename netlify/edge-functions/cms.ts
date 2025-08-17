@@ -14,11 +14,15 @@ import type {
 } from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/types.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
-    const USE_PROD_URLS = false
-    const FIELDS_URL =
-        globalThis?.Netlify || USE_PROD_URLS === true
-            ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/"
-            : "http://localhost:4545/"
+    const USE_LOCAL_FIELDS = false
+
+    const FIELDS_URL = globalThis?.Netlify // Checks for Netlify in the global scope
+        ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/" // Use CDN if Netlify is detected
+        : Boolean(USE_LOCAL_FIELDS) === true // If not Netlify, check if local fields are explicitly requested
+        ? "http://localhost:4545/"
+        : "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/" // Otherwise, default to the CDN
+
+    console.log("Using fields URL:", FIELDS_URL)
 
     const url = new URL(req.url)
     const props = {

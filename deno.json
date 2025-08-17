@@ -4,7 +4,6 @@
         "generate-imports": "deno run -A generate_imports.ts"
     },
     "imports": {
-        "@netlify/blobs": "npm:@netlify/blobs@^10.0.8",
         "@std/assert": "jsr:@std/assert@1"
     },
     "compilerOptions": {

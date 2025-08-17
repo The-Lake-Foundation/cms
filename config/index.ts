@@ -1,5 +1,6 @@
 import { getPages } from "./helpers/getPages.ts"
 import { getBlocks } from "./helpers/getBlocks.ts"
+import { normalizeSlug } from "./helpers/normalizeSlug.ts"
 
 export default {
     name: "The 1% Club CMS",
@@ -9,6 +10,8 @@ export default {
     `,
 
     cnfg: async (cms, props) => {
+        globalThis.getPages = getPages
+        globalThis.cms = cms
         cms.upload({
             name: "uploads",
             store: "gh:src/content/uploads/**/*",
@@ -23,24 +26,38 @@ export default {
             documentName: (data) => {
                 let slug = data.pageData.slug
 
-                // Use a regular expression to remove one or more leading slashes.
-                // The '^' anchors the pattern to the beginning of the string, and '\/+'
-                // matches one or more forward slashes.
-                slug = slug.replace(/^\/+/, "")
+                // Standardize slug format - ensure starts with / and no trailing /
+                slug = normalizeSlug(slug)
 
-                // Use a regular expression to remove one or more trailing slashes.
-                // The '$' anchors the pattern to the end of the string, and '\/+'
-                // matches one or more forward slashes.
-                slug = slug.replace(/\/+$/, "")
+                // Handle root page specially
+                if (slug === "/") return "index.json"
 
-                return `${slug}/index.json`
+                // Remove leading slash for path construction
+                return `${slug.slice(1)}/index.json`
             },
             documentLabel: (name) => {
-                return name.replace("index.json", "Page")
+                return name === "index.json"
+                    ? "Page"
+                    : name.replace("index.json", "Page")
             },
             rename: "auto",
             autoAddPrefix: false,
             labelSingular: "page",
+            duplicationModifiers: [
+                {
+                    field: "name",
+                    expression:
+                        "name.replace('/index.json', '-copy/index.json')",
+                },
+                {
+                    field: "status",
+                    value: "draft",
+                },
+                {
+                    field: "pageData.slug",
+                    expression: "data.pageData.slug + '-copy'",
+                },
+            ],
             fields: [
                 {
                     name: "status",
@@ -73,13 +90,19 @@ export default {
                             name: "slug",
                             type: "combobox",
                             description:
-                                "The URL slug for this page, e.g. 'about-us', 'legal/privacy-policy'",
+                                "The URL slug for this page, e.g. '/about-us', '/legal/privacy-policy'",
                             attributes: {
                                 required: true,
                             },
                             value: props?.folder,
                             async init(field, { data }, doc) {
-                                field.options = await getPages(cms, "pages")
+                                field.options = await globalThis.getPages(
+                                    cms,
+                                    "pages"
+                                )
+                            },
+                            transform(value) {
+                                return normalizeSlug(value)
                             },
                         },
                         "title: text!",
@@ -185,9 +208,9 @@ export default {
                                     label: "Hero", // Label displayed in the modal
                                     type: "object", // <-- CRUCIAL: This type ensures it saves as an object
                                     // Custom property for modal UI presentation
-                                    category: ["Content"],
+                                    category: ["Components"],
                                     description:
-                                        "A large, engaging section for key messages.",
+                                        "A large, engaging section at the top of the page",
                                     // diagram: "/img/hero-diagram.png",
                                     fields: [
                                         {
@@ -202,102 +225,90 @@ export default {
                                             required: false,
                                         },
                                         {
-                                            name: "image",
-                                            label: "Background Image",
-                                            type: "file",
-                                            required: false,
-                                        },
-                                        {
-                                            name: "cta_text",
-                                            label: "Call to Action Text",
-                                            type: "text",
-                                            required: false,
-                                        },
-                                        {
-                                            name: "cta_link",
-                                            label: "Call to Action Link",
-                                            type: "url",
-                                            required: false,
+                                            name: "blocks",
+                                            label: "Blocks",
+                                            type: "library",
+                                            fields: [...(await getBlocks())],
                                         },
                                     ],
                                 },
-                                {
-                                    name: "textBlock",
-                                    label: "Text Block",
-                                    type: "object",
-                                    category: ["Primitive"],
-                                    description:
-                                        "A simple paragraph of rich text content.",
-                                    fields: [
-                                        {
-                                            name: "appearance",
-                                            type: "object",
-                                            fields: [
-                                                {
-                                                    name: "width",
-                                                    type: "select",
-                                                    options: [
-                                                        "auto",
-                                                        "100%",
-                                                        "75%",
-                                                        "50%",
-                                                        "25%",
-                                                    ],
-                                                    value: "auto",
-                                                },
-                                                {
-                                                    name: "selfAlignment",
-                                                    label: "Self Alignment",
-                                                    type: "object",
-                                                    fields: [
-                                                        {
-                                                            name: "xAlignment",
-                                                            label: "X Alignment",
-                                                            type: "select",
-                                                            options: [
-                                                                "start",
-                                                                "end",
-                                                                "center",
-                                                            ],
-                                                        },
-                                                        {
-                                                            name: "yAlignment",
-                                                            label: "Y Alignment",
-                                                            type: "select",
-                                                            options: [
-                                                                "start",
-                                                                "end",
-                                                                "center",
-                                                            ],
-                                                        },
-                                                    ],
-                                                },
-                                                {
-                                                    name: "advanced",
-                                                    type: "object",
-                                                    fields: [
-                                                        {
-                                                            name: "css",
-                                                            label: "Custom CSS",
-                                                            type: "code",
-                                                            value: "{}",
-                                                            attributes: {
-                                                                data: {
-                                                                    language:
-                                                                        "CSS",
-                                                                },
-                                                            },
-                                                        },
-                                                    ],
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            name: "text",
-                                            type: "text",
-                                        },
-                                    ],
-                                },
+                                // {
+                                //     name: "textBlock",
+                                //     label: "Text Block",
+                                //     type: "object",
+                                //     category: ["Primitive"],
+                                //     description:
+                                //         "A simple paragraph of rich text content.",
+                                //     fields: [
+                                //         {
+                                //             name: "appearance",
+                                //             type: "object",
+                                //             fields: [
+                                //                 {
+                                //                     name: "width",
+                                //                     type: "select",
+                                //                     options: [
+                                //                         "auto",
+                                //                         "100%",
+                                //                         "75%",
+                                //                         "50%",
+                                //                         "25%",
+                                //                     ],
+                                //                     value: "auto",
+                                //                 },
+                                //                 {
+                                //                     name: "selfAlignment",
+                                //                     label: "Self Alignment",
+                                //                     type: "object",
+                                //                     fields: [
+                                //                         {
+                                //                             name: "xAlignment",
+                                //                             label: "X Alignment",
+                                //                             type: "select",
+                                //                             options: [
+                                //                                 "start",
+                                //                                 "end",
+                                //                                 "center",
+                                //                             ],
+                                //                         },
+                                //                         {
+                                //                             name: "yAlignment",
+                                //                             label: "Y Alignment",
+                                //                             type: "select",
+                                //                             options: [
+                                //                                 "start",
+                                //                                 "end",
+                                //                                 "center",
+                                //                             ],
+                                //                         },
+                                //                     ],
+                                //                 },
+                                //                 {
+                                //                     name: "advanced",
+                                //                     type: "object",
+                                //                     fields: [
+                                //                         {
+                                //                             name: "css",
+                                //                             label: "Custom CSS",
+                                //                             type: "code",
+                                //                             value: "{}",
+                                //                             attributes: {
+                                //                                 data: {
+                                //                                     language:
+                                //                                         "CSS",
+                                //                                 },
+                                //                             },
+                                //                         },
+                                //                     ],
+                                //                 },
+                                //             ],
+                                //         },
+                                //         {
+                                //             name: "text",
+                                //             type: "text",
+                                //         },
+                                //     ],
+                                // },
                             ],
                         },
                     ],

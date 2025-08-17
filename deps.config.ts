@@ -17,7 +17,6 @@ export default {
     ],
     npm: [
         "octokit@5.0.3",
-        "@netlify/blobs",
         "meriyah@6.0.5",
         "estree-walker@3.0.3",
         "@imagemagick/magick-wasm@0.0.35",

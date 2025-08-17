@@ -38,6 +38,13 @@ const template = {
             type: "object",
             fields: [
                 {
+                    name: "textAlignment",
+                    label: "Text Alignment",
+                    type: "select",
+                    options: ["left", "center", "right"],
+                    value: "left",
+                },
+                {
                     name: "css",
                     label: "Custom CSS",
                     type: "code",
@@ -69,9 +76,75 @@ type Block = {
     [key: string]: unknown
 }
 
-export async function getBlocks(): Promise<Block[]> {
-    const blocksArray = Object.values(blocks) as Block[]
+interface Exclude {
+    blocks?: string[]
+    categories?: string[]
+}
+interface Include {
+    blocks?: string[]
+    categories?: string[]
+}
 
+export async function getBlocks({
+    exclude,
+    include,
+}: {
+    exclude?: Exclude
+    include?: Include
+} = {}): Promise<Block[]> {
+    let blocksArray = Object.values(blocks) as Block[]
+
+    // First apply include filters if they exist
+    if (include) {
+        // Include by specific block names
+        if (include.blocks) {
+            blocksArray = blocksArray.filter((block) =>
+                include.blocks.includes(block.name)
+            )
+        }
+
+        // Include by categories
+        if (include.categories) {
+            blocksArray = blocksArray.filter((block) => {
+                if (!block.category) return false // Exclude blocks with no category if we're filtering by category
+
+                const blockCategories = Array.isArray(block.category)
+                    ? block.category
+                    : [block.category]
+
+                return blockCategories.some((cat) =>
+                    include.categories.includes(cat)
+                )
+            })
+        }
+    }
+
+    // Then apply exclude filters if they exist
+    if (exclude) {
+        // Exclude by specific block names
+        if (exclude.blocks) {
+            blocksArray = blocksArray.filter(
+                (block) => !exclude.blocks.includes(block.name)
+            )
+        }
+
+        // Exclude by categories
+        if (exclude.categories) {
+            blocksArray = blocksArray.filter((block) => {
+                if (!block.category) return true // Keep blocks with no category
+
+                const blockCategories = Array.isArray(block.category)
+                    ? block.category
+                    : [block.category]
+
+                return !blockCategories.some((cat) =>
+                    exclude.categories.includes(cat)
+                )
+            })
+        }
+    }
+
+    // Add the appearance template to each block
     const processedBlocks = blocksArray.map((block) => ({
         ...block,
         fields: [template, ...block.fields],
