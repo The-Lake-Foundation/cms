@@ -552,6 +552,8 @@
     "https://esm.sh/gh/jcardama/deno_slugify@6d9b664/mod.ts": "2cc52d7b0ffa172b2bf34dc3ace935ab4cb67c18b6c8d3ca653e4a13039c8447",
     "https://esm.sh/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/core/templates/tree.ts": "20a57737bafc1ffbc4bf3199d8cbef9e4907db99470f550ae67029d77b4d90c8",
     "https://esm.sh/gh/lumeland/cms@752b7a796a1d7fded4b2a38bad813d6efcf03a49/denonext/core/templates/tree.ts.mjs": "b51d1ebe81fa24175603f93ef7ebb083c0b39e24166653b69a978c892e076014",
+    "https://esm.sh/gh/moonfacedigital/lume-cms-partials@2a774972eade5d3b447f687d042ac8e61b8cd56b/blocks/index.js": "4f62d4ff379393c1ed88c0a67a5d1b4850c0a170b228c0a0e636477506f7bd74",
+    "https://esm.sh/gh/moonfacedigital/lume-cms-partials@2a774972eade5d3b447f687d042ac8e61b8cd56b/denonext/blocks/index.mjs": "d65654b4a9e9b28d2f75a4770b6b09dbed9e62e10e446951718b87d101e64fca",
     "https://esm.sh/gh/moonfacedigital/lume-cms-partials@45ebff739efb93cd0f4828ae1ce09a60aa5c7593/blocks/index.js": "0f436dbba36343676e5a3f6189b0028bcea715027bdce13afa522e734c810a42",
     "https://esm.sh/gh/moonfacedigital/lume-cms-partials@45ebff739efb93cd0f4828ae1ce09a60aa5c7593/es2022/blocks/index.mjs": "8c075087a448d6320edff05a82e3043c3bc9aa4093446a057e05ebdea6c4519c",
     "https://esm.sh/universal-user-agent@7.0.3/denonext/universal-user-agent.mjs": "021090b5f3bb060b1b0364cb79daa2cc3760db58a023cd8892a098e6256a84c4",

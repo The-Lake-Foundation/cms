@@ -16,11 +16,14 @@ import type {
 export default async function handler(req: Request, ctx?: Context) {
     const USE_LOCAL_FIELDS = false
 
+    const REMOTE_FIELDS_URL =
+        "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields@c3b72ca1056d1535ec40b40cb14f9100561b198e"
+
     const FIELDS_URL = globalThis?.Netlify // Checks for Netlify in the global scope
-        ? "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/" // Use CDN if Netlify is detected
+        ? REMOTE_FIELDS_URL // Use CDN if Netlify is detected
         : Boolean(USE_LOCAL_FIELDS) === true // If not Netlify, check if local fields are explicitly requested
         ? "http://localhost:4545/"
-        : "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields/" // Otherwise, default to the CDN
+        : REMOTE_FIELDS_URL // Otherwise, default to the CDN
 
     console.log("Using fields URL:", FIELDS_URL)
 
