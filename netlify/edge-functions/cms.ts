@@ -90,7 +90,7 @@ export default async function handler(req: Request, ctx?: Context) {
 
     cms.field("combobox", {
         tag: "f-combobox",
-        jsImport: FIELDS_URL + "combobox/index.js",
+        jsImport: FIELDS_URL + "/combobox/index.js",
         applyChanges(data, changes, field) {
             const { name } = field
             const value = changes[name]
@@ -100,7 +100,7 @@ export default async function handler(req: Request, ctx?: Context) {
 
     cms.field("library", {
         tag: "f-library",
-        jsImport: FIELDS_URL + "library/index.js",
+        jsImport: FIELDS_URL + "/library/index.js",
         async applyChanges(data, changes, field, document, cmsContent) {
             const value = await Promise.all(
                 Object.values(changes[field.name] || {}).map(
