@@ -1,16 +1,16 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-// import lumeCMS from "../../../../../../lume-cms/mod.ts"
-// import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/storage/github.ts"
-import { transform } from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/fields/utils.ts"
+import lumeCMS from "../../../../../../lume-cms/mod.ts"
+import GitHub from "../../../../../../lume-cms/storage/github.ts"
+// import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/mod.ts"
+// import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/storage/github.ts"
+import { transform } from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/fields/utils.ts"
 import type {
     Data,
     FieldDefinition,
     GroupField,
     ResolvedGroupField,
-} from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/types.ts"
+} from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/types.ts"
 
 import _config from "../../config/index.ts"
 
@@ -41,12 +41,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
                    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css" as="style">
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/static/styles.css"></noscript>
                     <meta
 			name="viewport"
 			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
