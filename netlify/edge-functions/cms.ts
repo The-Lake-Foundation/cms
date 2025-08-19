@@ -2,22 +2,22 @@ import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
 // import lumeCMS from "../../../../../../lume-cms/mod.ts"
 // import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/storage/github.ts"
+import lumeCMS from "https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/mod.ts"
+import GitHub from "https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/storage/github.ts"
 import _config from "../../config/index.ts"
-import { transform } from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/fields/utils.ts"
+import { transform } from "https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/fields/utils.ts"
 import type {
     Data,
     FieldDefinition,
     GroupField,
     ResolvedGroupField,
-} from "https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/types.ts"
+} from "https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/types.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
     const USE_LOCAL_FIELDS = false
 
     const REMOTE_FIELDS_URL =
-        "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms-fields@c3b72ca1056d1535ec40b40cb14f9100561b198e"
+        "https://esm.sh/gh/moonfacedigital/lume-cms-fields@c3b72ca1056d1535ec40b40cb14f9100561b198e/"
 
     const FIELDS_URL = globalThis?.Netlify // Checks for Netlify in the global scope
         ? REMOTE_FIELDS_URL // Use CDN if Netlify is detected
@@ -40,12 +40,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
-                   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style">
+                   <link rel="preconnect" href="https://esm.sh" crossorigin>
+                   <link rel="prefetch" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css"></noscript>
                     <meta
 			name="viewport"
 			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
@@ -90,7 +90,7 @@ export default async function handler(req: Request, ctx?: Context) {
 
     cms.field("combobox", {
         tag: "f-combobox",
-        jsImport: FIELDS_URL + "/combobox/index.js",
+        jsImport: FIELDS_URL + "combobox/index.js",
         applyChanges(data, changes, field) {
             const { name } = field
             const value = changes[name]
@@ -100,7 +100,7 @@ export default async function handler(req: Request, ctx?: Context) {
 
     cms.field("library", {
         tag: "f-library",
-        jsImport: FIELDS_URL + "/library/index.js",
+        jsImport: FIELDS_URL + "library/index.js",
         async applyChanges(data, changes, field, document, cmsContent) {
             const value = await Promise.all(
                 Object.values(changes[field.name] || {}).map(
