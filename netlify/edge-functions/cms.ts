@@ -33,12 +33,12 @@ export default async function handler(req: Request, ctx?: Context) {
         },
         root: "", // Required so that Deno.cwd() isn't run.. thanks Oscar!
         extraHead: `
-                   <link rel="preload" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style" onload="this.rel='stylesheet'">
+                   <link rel="preload" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css" as="style" onload="this.rel='stylesheet'">
 
-                   <link rel="preconnect" href="https://esm.sh" crossorigin>
-                   <link rel="prefetch" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css" as="style">
+                   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+                   <link rel="prefetch" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css" as="style">
 
-                   <noscript><link rel="stylesheet" href="https://esm.sh/gh/lumeland/cms@c1cc8db321f4ab3a7eced4b8e5b22cd5758558fe/static/styles.css"></noscript>
+                   <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/static/styles.css"></noscript>
                     <meta
 			name="viewport"
 			content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
