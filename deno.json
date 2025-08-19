@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "start": "deno task generate-imports && deno run --watch --allow-net --allow-read --allow-env --env-file --allow-import serve.ts",
+        "start": "deno task generate-imports && deno run --no-check --watch --allow-net --allow-read --allow-env --env-file --allow-import serve.ts",
         "generate-imports": "deno run -A generate_imports.ts"
     },
     "imports": {

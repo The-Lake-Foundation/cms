@@ -1,5 +1,5 @@
 // import * as blocks from "../../../../../../lume-cms-partials/blocks/index.js"
-import * as blocks from "https://esm.sh/gh/moonfacedigital/lume-cms-partials@2a774972eade5d3b447f687d042ac8e61b8cd56b/blocks/index.js"
+import * as blocks from "https://raw.githubusercontent.com/moonfacedigital/lume-cms-partials/main/blocks/index.js"
 
 const template = {
     name: "blockAppearance",
