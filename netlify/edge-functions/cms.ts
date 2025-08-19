@@ -1,9 +1,9 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-import lumeCMS from "../../../../../../lume-cms/mod.ts"
-import GitHub from "../../../../../../lume-cms/storage/github.ts"
-// import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/mod.ts"
-// import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/storage/github.ts"
+// import lumeCMS from "../../../../../../lume-cms/mod.ts"
+// import GitHub from "../../../../../../lume-cms/storage/github.ts"
+import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/mod.ts"
+import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/storage/github.ts"
 import { transform } from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@af45d4f2f51238bad6f5e68263952d0a458b8c73/fields/utils.ts"
 import type {
     Data,
