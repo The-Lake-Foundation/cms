@@ -58,6 +58,8 @@ export default {
                     expression: "data.pageData.slug + '-copy'",
                 },
             ],
+            url: null,
+            src: null,
             fields: [
                 {
                     name: "status",
@@ -94,7 +96,7 @@ export default {
                             attributes: {
                                 required: true,
                             },
-                            value: props?.folder,
+                            value: "/" + props?.folder,
                             async init(field, { data }, doc) {
                                 field.options = await globalThis.getPages(
                                     cms,
@@ -232,83 +234,6 @@ export default {
                                         },
                                     ],
                                 },
-                                // {
-                                //     name: "textBlock",
-                                //     label: "Text Block",
-                                //     type: "object",
-                                //     category: ["Primitive"],
-                                //     description:
-                                //         "A simple paragraph of rich text content.",
-                                //     fields: [
-                                //         {
-                                //             name: "appearance",
-                                //             type: "object",
-                                //             fields: [
-                                //                 {
-                                //                     name: "width",
-                                //                     type: "select",
-                                //                     options: [
-                                //                         "auto",
-                                //                         "100%",
-                                //                         "75%",
-                                //                         "50%",
-                                //                         "25%",
-                                //                     ],
-                                //                     value: "auto",
-                                //                 },
-                                //                 {
-                                //                     name: "selfAlignment",
-                                //                     label: "Self Alignment",
-                                //                     type: "object",
-                                //                     fields: [
-                                //                         {
-                                //                             name: "xAlignment",
-                                //                             label: "X Alignment",
-                                //                             type: "select",
-                                //                             options: [
-                                //                                 "start",
-                                //                                 "end",
-                                //                                 "center",
-                                //                             ],
-                                //                         },
-                                //                         {
-                                //                             name: "yAlignment",
-                                //                             label: "Y Alignment",
-                                //                             type: "select",
-                                //                             options: [
-                                //                                 "start",
-                                //                                 "end",
-                                //                                 "center",
-                                //                             ],
-                                //                         },
-                                //                     ],
-                                //                 },
-                                //                 {
-                                //                     name: "advanced",
-                                //                     type: "object",
-                                //                     fields: [
-                                //                         {
-                                //                             name: "css",
-                                //                             label: "Custom CSS",
-                                //                             type: "code",
-                                //                             value: "{}",
-                                //                             attributes: {
-                                //                                 data: {
-                                //                                     language:
-                                //                                         "CSS",
-                                //                                 },
-                                //                             },
-                                //                         },
-                                //                     ],
-                                //                 },
-                                //             ],
-                                //         },
-                                //         {
-                                //             name: "text",
-                                //             type: "text",
-                                //         },
-                                //     ],
-                                // },
                             ],
                         },
                     ],
