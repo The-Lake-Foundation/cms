@@ -7,29 +7,22 @@ const getPossibleDirectories = (pagesArray) => {
         // Remove "/Page" suffix if present
         const cleanedLabel = page.label.replace(/\/?Page$/, "")
 
-        // Skip empty labels (shouldn't happen with our normalization)
+        // Skip empty labels
         if (!cleanedLabel) return
 
-        // Normalize the path (ensure starts with /)
+        // Normalize the path (ensure it starts with /)
         const path = cleanedLabel.startsWith("/")
             ? cleanedLabel
             : `/${cleanedLabel}`
 
         // Split into segments
         const segments = path.split("/").filter(Boolean)
-        let currentPath = "/"
+        let currentPath = ""
 
-        // Add each directory level
-        for (let i = 0; i < segments.length; i++) {
-            currentPath += segments[i]
-
-            // For non-leaf nodes, add with trailing slash
-            if (i < segments.length - 1) {
-                directories.add(`${currentPath}/`)
-                currentPath += "/"
-            } else {
-                directories.add(currentPath)
-            }
+        // Add each directory level with a trailing slash
+        for (const segment of segments) {
+            currentPath += `/${segment}`
+            directories.add(`${currentPath}/`)
         }
     })
 

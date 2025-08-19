@@ -58,8 +58,6 @@ export default {
                     expression: "data.pageData.slug + '-copy'",
                 },
             ],
-            url: null,
-            src: null,
             fields: [
                 {
                     name: "status",

@@ -1,9 +1,17 @@
 import type { Config, Context } from "https://esm.sh/@netlify/edge-functions"
 import { Octokit } from "https://esm.sh/@octokit/rest"
-// import lumeCMS from "../../../../../../lume-cms/mod.ts"
-// import GitHub from "../../../../../../lume-cms/storage/github.ts"
-import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/mod.ts"
-import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/storage/github.ts"
+import lumeCMS from "../../../../../../lume-cms/mod.ts"
+import GitHub from "../../../../../../lume-cms/storage/github.ts"
+// import lumeCMS from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/mod.ts"
+// import GitHub from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/storage/github.ts"
+import { transform } from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/fields/utils.ts"
+import type {
+    Data,
+    FieldDefinition,
+    GroupField,
+    ResolvedGroupField,
+} from "https://cdn.jsdelivr.net/gh/moonfacedigital/lume-cms@c1e6c0708ad729b25547f8147c79dce5b790b4b7/types.ts"
+
 import _config from "../../config/index.ts"
 
 export default async function handler(req: Request, ctx?: Context) {
@@ -98,36 +106,31 @@ export default async function handler(req: Request, ctx?: Context) {
             const value = await Promise.all(
                 Object.values(changes[field.name] || {}).map(
                     async (subchanges) => {
-                        const type = subchanges.type
-                        const value = { type }
-                        const chooseField = field["fields"]
+                        const type = subchanges.type as string
+                        const value = { type } as Data
+                        const chooseField = field.fields?.find(
+                            (f) => f.name === type
+                        ) as ResolvedGroupField | undefined
 
                         if (!chooseField) {
                             throw new Error(`No field found for type '${type}'`)
                         }
 
-                        for (const f of chooseField || []) {
-                            const fieldObj = f
-                            if (
-                                fieldObj.applyChanges &&
-                                typeof fieldObj.applyChanges === "function"
-                            ) {
-                                await fieldObj.applyChanges(
-                                    value,
-                                    subchanges,
-                                    f,
-                                    document,
-                                    cmsContent
-                                )
-                            }
+                        for (const f of chooseField?.fields || []) {
+                            await f.applyChanges(
+                                value,
+                                subchanges,
+                                f,
+                                document,
+                                cmsContent
+                            )
                         }
 
                         return value
                     }
                 )
             )
-
-            data[field.name] = value
+            data[field.name] = transform(field, value)
         },
     })
 
