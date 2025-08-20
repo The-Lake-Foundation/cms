@@ -241,9 +241,7 @@ export default {
         cms.collection({
             name: "forms",
             store: "gh:src/content/forms/**.json",
-            rename: "auto",
-            autoAddPrefix: false,
-            labelSingular: "page",
+            labelSingular: "form",
             fields: [],
         })
     },
