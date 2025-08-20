@@ -240,25 +240,7 @@ export default {
         })
         cms.collection({
             name: "forms",
-            store: "gh:src/content/forms/**/index.json",
-            documentName: (data) => {
-                let slug = data.pageData.slug
-
-                // Use a regular expression to remove one or more leading slashes.
-                // The '^' anchors the pattern to the beginning of the string, and '\/+'
-                // matches one or more forward slashes.
-                slug = slug.replace(/^\/+/, "")
-
-                // Use a regular expression to remove one or more trailing slashes.
-                // The '$' anchors the pattern to the end of the string, and '\/+'
-                // matches one or more forward slashes.
-                slug = slug.replace(/\/+$/, "")
-
-                return `${slug}/index.json`
-            },
-            documentLabel: (name) => {
-                return name.replace("index.json", "Page")
-            },
+            store: "gh:src/content/forms/**.json",
             rename: "auto",
             autoAddPrefix: false,
             labelSingular: "page",
